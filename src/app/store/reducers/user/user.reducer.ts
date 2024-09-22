@@ -1,8 +1,23 @@
 import { createReducer, on } from '@ngrx/store';
 import { initialState } from './user.constants';
-import { someAction } from './user.actions';
+import { fetchUser, fetchUserError, fetchUserSuccess } from './user.actions';
 
 export const userReducer = createReducer(
-  initialState
-  //   on(someAction)
+  initialState,
+  on(fetchUser, (state) => ({
+    ...state,
+    error: null,
+    isLoading: true,
+  })),
+  on(fetchUserError, (state, { error }) => ({
+    ...state,
+    error,
+    isLoading: false,
+  })),
+  on(fetchUserSuccess, (state, { refreshToken, accessToken, ...data }) => ({
+    data,
+    error: null,
+    isAuth: true,
+    isLoading: false,
+  }))
 );

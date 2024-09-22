@@ -1,6 +1,18 @@
 import { createAction, props } from '@ngrx/store';
+import { USER_ACTIONS, UserResponse } from './user.constants';
+import { IAuth } from '../../../types/auth.types';
 
-export const someAction = createAction(
-  '[userAction] create',
-  props<{ a: 'hello' }>()
+export const fetchUserSuccess = createAction(
+  USER_ACTIONS.SUCCESS,
+  props<UserResponse>()
+);
+
+export const fetchUserError = createAction(
+  USER_ACTIONS.ERROR,
+  props<{ error: string }>()
+);
+
+export const fetchUser = createAction(
+  USER_ACTIONS.LOADING,
+  props<{ auth_type: 'auth' | 'reg'; authDto: IAuth }>()
 );

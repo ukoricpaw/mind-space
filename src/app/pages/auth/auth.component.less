@@ -1,0 +1,47 @@
+@import "../../styles/index.less";
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: inherit;
+}
+
+.auth-wrapper {
+  width: 500px;
+  padding: 4rem;
+  margin: 1rem 0;
+  background-color: @elem-background;
+  border-radius: 1rem;
+  .shadow(1,1);
+
+  & h2 {
+    text-transform: uppercase;
+    font-weight: 700;
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  & .auth-form {
+    display: grid;
+    grid-template-columns: 1rf;
+    row-gap: 1rem;
+  }
+}
+
+p {
+  text-align: end;
+  & .redirect {
+    display: inline-block;
+    width: fit-content;
+
+    & span {
+      color: @logo-color;
+    }
+  }
+}
+
+.error {
+  height: 1.5rem;
+  color: red;
+}

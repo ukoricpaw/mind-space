@@ -1,1 +1,37 @@
-<h1>Auth</h1>
+<div class="auth-wrapper">
+  <h2>{{ isLogin ? "Авторизация" : "Регистрация" }}</h2>
+  <form [formGroup]="authForm" class="auth-form" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input
+        formControlName="email"
+        matInput
+        placeholder="someemail@gmail.com"
+      />
+      <mat-hint>Введите email</mat-hint>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Пароль</mat-label>
+      <input
+        formControlName="password"
+        type="password"
+        matInput
+        placeholder="12@34#Q^8"
+      />
+      <mat-hint>Введите пароль</mat-hint>
+    </mat-form-field>
+    <p class="error">{{ $authError | async }}</p>
+    <p>
+      <a
+        class="redirect"
+        [routerLink]="isLogin ? '/auth/registration' : '/auth/login'"
+      >
+        {{ isLogin ? "Нет аккаунта?" : "Есть аккаунт?" }}
+        <span>{{ isLogin ? "Зарегистрироваться" : "Авторизоваться" }}</span></a
+      >
+    </p>
+    <button [disabled]="!authForm.valid" type="submit" mat-flat-button>
+      {{ isLogin ? "Авторизоваться" : "Зарегистрироваться" }}
+    </button>
+  </form>
+</div>
