@@ -1,0 +1,18 @@
+<header class="header">
+  <a routerLink="/">
+    <app-logo></app-logo>
+  </a>
+  <nav class="nav">
+    <ul class="nav-list">
+      <li *ngFor="let item of navList; trackBy: navListTrackBy">
+        @if (item.icon) {
+        <a [routerLink]="item.path"
+          ><app-svg-icon [name]="item.icon"></app-svg-icon
+        ></a>
+        } @else {
+        <a [routerLink]="item.path">{{ item.title }}</a>
+        }
+      </li>
+    </ul>
+  </nav>
+</header>

@@ -1,0 +1,40 @@
+@import "../../styles/index.less";
+
+.footer {
+  padding: 1.5rem 1rem;
+  background-color: @elem-background;
+  .shadow(0, -1);
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  grid-template-areas: "href" "rule";
+
+  & a {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    grid-area: href;
+
+    & span > svg {
+      .transition(0.15);
+    }
+
+    &:hover span > svg {
+      opacity: 0.8;
+    }
+
+    &:active span > svg {
+      opacity: 0.4;
+    }
+  }
+
+  & hr {
+    margin-top: 1rem;
+    grid-area: rule;
+  }
+
+  & .telegram-title {
+    font-size: 1.5rem;
+    font-weight: 400;
+  }
+}
