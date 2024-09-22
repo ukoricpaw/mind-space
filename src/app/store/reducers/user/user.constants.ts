@@ -24,7 +24,7 @@ export const initialState: UserState = {
 };
 
 export enum USER_ACTIONS {
-  SUCCESS = '[userAction] login',
+  SUCCESS = '[userAction] success',
   ERROR = '[userAction] error',
   LOADING = '[userAction] loading',
   REFRESH = '[userAction] refresh',
