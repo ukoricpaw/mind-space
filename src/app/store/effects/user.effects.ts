@@ -6,6 +6,7 @@ import {
   fetchUser,
   fetchUserError,
   fetchUserSuccess,
+  refreshUser,
 } from '../reducers/user/user.actions';
 import { catchError, exhaustMap, map, of } from 'rxjs';
 
@@ -24,6 +25,18 @@ export class UserEffects {
             )
           );
       })
+    )
+  );
+
+  $refreshToken = createEffect(() =>
+    this.actions$.pipe(
+      ofType(refreshUser),
+      exhaustMap(() =>
+        this.authService.refreshUser().pipe(
+          map((val) => fetchUserSuccess(val)),
+          catchError((err) => of(fetchUserError({ error: err.error.message })))
+        )
+      )
     )
   );
 

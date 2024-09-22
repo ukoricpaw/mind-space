@@ -3,7 +3,7 @@ import { CanActivate, GuardResult, MaybeAsync } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { TAppStore } from '../store/store.reducer';
 import { isUserAuthSelector } from '../store/reducers/user/user.selectors';
-import { map, take, tap } from 'rxjs';
+import { map, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

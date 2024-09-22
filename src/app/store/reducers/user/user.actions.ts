@@ -16,3 +16,5 @@ export const fetchUser = createAction(
   USER_ACTIONS.LOADING,
   props<{ auth_type: 'auth' | 'reg'; authDto: IAuth }>()
 );
+
+export const refreshUser = createAction(USER_ACTIONS.REFRESH);

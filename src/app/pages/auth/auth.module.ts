@@ -6,13 +6,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import AuthService from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { IsUserAuthGuard } from '../../guards/is-user-auth.guard';
 
 @NgModule({
   declarations: [AuthPageComponent],
-  providers: [AuthService, IsUserAuthGuard],
+  providers: [IsUserAuthGuard],
   imports: [
     MatButtonModule,
     MatFormFieldModule,

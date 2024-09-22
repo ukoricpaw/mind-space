@@ -27,4 +27,5 @@ export enum USER_ACTIONS {
   SUCCESS = '[userAction] login',
   ERROR = '[userAction] error',
   LOADING = '[userAction] loading',
+  REFRESH = '[userAction] refresh',
 }
