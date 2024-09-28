@@ -1,0 +1,11 @@
+<div class="tags-choose-wrapper">
+ <label class="tag-choose-title" for="tags">Выбрать тэги</label>
+<mat-form-field style="width: 100%">
+  <mat-label>Тэги</mat-label>
+  <mat-select  id="tags" [value]="chosenTags" (valueChange)="onChangeChosenTags($event)"  multiple>
+    @for (tag of tags.rows; track tag.id) {
+      <mat-option [value]="tag.id">{{tag.name}}</mat-option>
+    }
+  </mat-select>
+</mat-form-field>
+</div>

@@ -1,0 +1,19 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+<legend>Написать статью</legend>
+  <div class="field-wrapper">
+    <label for="title" class="field-wrapper-title">Введите название</label>
+  <mat-form-field class="form-file">
+    <mat-label>Название</mat-label>
+    <input formControlName="title" id="title" matInput type="text" >
+    <p class="error-title" *ngIf="form.controls.title.errors && form.controls.title.touched">Название должно содержать от 30 до 100 символов</p>
+  </mat-form-field>
+  </div>
+  <ng-container *ngIf="tags">
+    <app-choose-tags [(chosenTags)]="chosenTags" [tags]="tags"></app-choose-tags>
+    <button style="margin-bottom: 1rem" class="btn-form" (click)="restoreChosenTags()" type="button" mat-raised-button [disabled]="!chosenTags.length">Сбросить</button>
+  </ng-container>
+<app-text-editor [error]="htmlError" [html]="html" (htmlChange)="html = $event"></app-text-editor>
+  <div class="btn-wrapper">
+    <button class="btn-form" type="submit" mat-raised-button>Создать</button>
+  </div>
+</form>

@@ -19,13 +19,9 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     StoreAppModule,
     HttpClientModule,
     FooterModule,
-
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
   ],
   bootstrap: [AppComponent],
-  providers: [
-    provideAnimationsAsync(),
-    { multi: true, provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor },
-  ],
+  providers: [provideAnimationsAsync(), { multi: true, provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor }],
 })
 export default class AppModule {}
