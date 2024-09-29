@@ -1,1 +1,7 @@
-<p>choose-file works!</p>
+<div class="file-wrapper">
+  <input id="fileChange" accept="image/png, image/jpeg" type="file" class="file-input" (change)="onFileChange($event)">
+  <div class="file-change-title-wrapper">
+  <label for="fileChange" class="file-change">Выбрать файл</label><p *ngIf="file">{{file.name}}</p>
+  </div>
+  <img class="file-image" *ngIf="imageTemplate" [src]="imageTemplate" alt="embedded_image">
+</div>

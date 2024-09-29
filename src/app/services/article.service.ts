@@ -27,8 +27,10 @@ export class ArticleService {
     return query;
   }
 
-  createArticle(article: ArticleDto) {
-    return this.http.post(`${API_URL}${this.ARTICLE_API_URL}`, article, { withCredentials: true });
+  createArticle(formData: FormData) {
+    return this.http.post(`${API_URL}${this.ARTICLE_API_URL}`, formData, {
+      withCredentials: true,
+    });
   }
 
   getTags(): Observable<Paginated<ITag>> {

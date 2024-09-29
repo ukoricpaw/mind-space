@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { ChooseTagsModule } from '../../widgets/choose-tags/choose-tags.module';
+import { ChooseFileModule } from '../../widgets/choose-file/choose-file.module';
 
 @NgModule({
   declarations: [CreateArticleComponent],
@@ -26,6 +27,7 @@ import { ChooseTagsModule } from '../../widgets/choose-tags/choose-tags.module';
     MatInput,
     ReactiveFormsModule,
     ChooseTagsModule,
+    ChooseFileModule,
   ],
 })
 export default class CreateArticleModule {}
