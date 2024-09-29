@@ -1,15 +1,11 @@
 import { createReducer, on } from '@ngrx/store';
 import { initialState } from './user.constants';
-import {
-  fetchUser,
-  fetchUserError,
-  fetchUserSuccess,
-  refreshUser,
-} from './user.actions';
+import { clearError, fetchUser, fetchUserError, fetchUserSuccess, refreshUser } from './user.actions';
+import { error } from '@angular/compiler-cli/src/transformers/util';
 
 export const userReducer = createReducer(
   initialState,
-  on(fetchUser, (state) => ({
+  on(fetchUser, state => ({
     ...state,
     error: null,
     isLoading: true,
@@ -25,5 +21,6 @@ export const userReducer = createReducer(
     isAuth: true,
     isLoading: false,
   })),
-  on(refreshUser, (state) => ({ ...state, isLoading: true, error: null }))
+  on(refreshUser, state => ({ ...state, isLoading: true, error: null })),
+  on(clearError, state => ({ ...state, error: null })),
 );

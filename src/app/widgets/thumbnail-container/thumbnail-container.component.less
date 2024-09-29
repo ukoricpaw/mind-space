@@ -1,0 +1,39 @@
+@import "../../styles/index.less";
+
+.thumbnail {
+  height: 400px;
+  position: relative;
+  background-color: @active-color;
+
+  & .thumbnail-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    & .thumbnail-title {
+      font-size: 2.8rem;
+      line-height: 3.5rem;
+      text-align: center;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      color: @elem-background;
+    }
+
+  }
+
+
+  & .thumbnail-image {
+    height: inherit;
+    z-index: 1;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 0;
+    position: absolute;
+    inset: 0;
+    opacity: 0.6;
+    filter: brightness(0.3);
+  }
+}

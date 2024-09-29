@@ -1,11 +1,6 @@
-import {
-  HttpEvent,
-  HttpHandler,
-  HttpInterceptor,
-  HttpRequest,
-} from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, of } from 'rxjs';
+import { catchError, Observable, of, throwError } from 'rxjs';
 import AuthService from '../services/auth.service';
 
 @Injectable()
@@ -14,10 +9,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   constructor(private authService: AuthService) {}
 
-  intercept(
-    req: HttpRequest<any>,
-    next: HttpHandler
-  ): Observable<HttpEvent<any>> {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
     return next.handle(req).pipe(
       catchError((res: any) => {
         if ((res.status === 401 || res.status === 403) && !this.isRefresh) {
@@ -25,8 +17,8 @@ export class AuthInterceptor implements HttpInterceptor {
           return this.authService.refreshUser();
         }
         this.isRefresh = false;
-        return of(res);
-      })
+        return throwError(res);
+      }),
     );
   }
 }

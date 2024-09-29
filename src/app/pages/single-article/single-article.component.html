@@ -1,0 +1,8 @@
+<p *ngIf="$articleLoading | async">Loading...</p>
+<article *ngIf="($article | async) as fullArticle">
+  <app-thumbnail-container [articleInfo]="fullArticle.article | toArticleInfo"></app-thumbnail-container>
+  <section class="article-content" [innerHTML]="safeHtml" toHtml [content]="fullArticle.article.content" (safeHtml)="setSafeHtml($event)" >
+
+  </section>
+</article>
+

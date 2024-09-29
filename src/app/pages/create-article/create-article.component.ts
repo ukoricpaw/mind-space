@@ -1,4 +1,4 @@
-import { Component, DoCheck, OnDestroy, OnInit } from '@angular/core';
+import { Component, DoCheck, OnDestroy, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
 import { ArticleService } from '../../services/article.service';
 import { Store } from '@ngrx/store';
 import { TAppStore } from '../../store/store.reducer';
@@ -6,7 +6,7 @@ import { tagsLoadingSelector, tagsSelector } from '../../store/reducers/article/
 import { tagsLoadingAction } from '../../store/reducers/article/article.actions';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ITag } from '../../store/reducers/article/article.constants';
-import { Paginated } from '../../types/common.types';
+import { IError, Paginated } from '../../types/common.types';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -73,8 +73,11 @@ export class CreateArticleComponent implements OnInit, OnDestroy {
     formData.append('tags', tags);
     formData.append('content', this.html);
 
-    this.articleService.createArticle(formData).subscribe(data => {
-      this.router.navigate(['/']);
-    });
+    this.articleService.createArticle(formData).subscribe(
+      data => {
+        this.router.navigate(['/']);
+      },
+      (err: IError) => {},
+    );
   }
 }

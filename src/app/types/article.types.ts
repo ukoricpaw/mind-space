@@ -12,3 +12,9 @@ export interface PaginatedReq {
   search: string;
   isPrivate?: boolean;
 }
+
+export enum ActiveTypes {
+  MODERATION = 0,
+  ACTIVE = 1,
+  BANNED = 2,
+}

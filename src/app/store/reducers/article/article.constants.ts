@@ -1,10 +1,11 @@
 import { IRole } from '../../../types/role.types';
 import { ActionStatus, IError, Paginated } from '../../../types/common.types';
+import { ActiveTypes } from '../../../types/article.types';
 
 export interface ArticleState {
   tagStatus: ActionStatus | null;
   articleStatus: ActionStatus | null;
-  article?: IArticle;
+  article?: ISingleArticleDto;
   tags?: Paginated<ITag>;
   tagsError: IError | null;
   articleError: IError | null;
@@ -21,14 +22,20 @@ export interface IArticle {
   id: number;
   thumbnail: string;
   content: string;
+  title: string;
   userId: number;
   isPrivate: boolean;
   qtyOfViews: number;
   inviteLink: string;
-  articleActiveType: number;
+  articleActiveType: ActiveTypes;
   createdAt: string;
   updatedAt: string;
   articleTypes: IArticleType[];
+  role: IRole;
+}
+
+export interface ISingleArticleDto {
+  article: IArticle;
   role: IRole;
 }
 

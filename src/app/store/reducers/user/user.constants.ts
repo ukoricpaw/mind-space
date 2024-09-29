@@ -28,4 +28,5 @@ export enum USER_ACTIONS {
   ERROR = '[userAction] error',
   LOADING = '[userAction] loading',
   REFRESH = '[userAction] refresh',
+  CLEAR_ERROR = '[userAction] clear error',
 }

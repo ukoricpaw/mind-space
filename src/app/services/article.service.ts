@@ -4,7 +4,7 @@ import { ArticleDto, PaginatedReq } from '../types/article.types';
 import { API_URL } from '../types/auth.types';
 import { Observable } from 'rxjs';
 import { Paginated } from '../types/common.types';
-import { IArticle, ITag } from '../store/reducers/article/article.constants';
+import { IArticle, ISingleArticleDto, ITag } from '../store/reducers/article/article.constants';
 
 @Injectable({ providedIn: 'root' })
 export class ArticleService {
@@ -38,7 +38,9 @@ export class ArticleService {
   }
 
   getSingleArticle(articleId: number) {
-    return this.http.get<IArticle>(`${API_URL}${this.ARTICLE_API_URL}/${articleId}`, { withCredentials: true });
+    return this.http.get<ISingleArticleDto>(`${API_URL}${this.ARTICLE_API_URL}/${articleId}`, {
+      withCredentials: true,
+    });
   }
 
   getMyArticles(req: PaginatedReq) {
