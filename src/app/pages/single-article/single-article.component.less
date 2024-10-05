@@ -5,6 +5,13 @@
   width: 100%;
 }
 
+.skeleton-class {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+}
+
 
 .article-content {
   background-color: @elem-background;
@@ -15,4 +22,25 @@
   gap: 0.6rem;
   padding: 3rem;
   box-sizing: border-box;
+  .article-field {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .publication-date {
+    font-size: 1rem;
+  }
+
+}
+
+.article-user {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0;
+
+  & * {
+    margin-bottom: 0;
+  }
 }

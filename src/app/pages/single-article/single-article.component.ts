@@ -1,14 +1,10 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { TAppStore } from '../../store/store.reducer';
 import { Store } from '@ngrx/store';
 import { articleLoadingAction } from '../../store/reducers/article/article.actions';
-import {
-  articleFailedSelector,
-  articleLoadingSelector,
-  articleSelector,
-} from '../../store/reducers/article/article.selectors';
+import { articleLoadingSelector, articleSelector } from '../../store/reducers/article/article.selectors';
 import { SafeHtml } from '@angular/platform-browser';
 
 @Component({
@@ -16,18 +12,24 @@ import { SafeHtml } from '@angular/platform-browser';
   templateUrl: './single-article.component.html',
   styleUrl: './single-article.component.less',
 })
-export class SingleArticleComponent implements OnDestroy, OnInit {
+export class SingleArticleComponent implements OnDestroy, OnInit, AfterViewInit {
   articleId!: string;
   paramSubscription!: Subscription;
   $articleLoading = this.store.select(articleLoadingSelector);
-  $articleError = this.store.select(articleFailedSelector);
   $article = this.store.select(articleSelector);
   safeHtml: SafeHtml = '';
+
+  @ViewChild('root')
+  rootElement!: ElementRef<HTMLDivElement>;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private store: Store<TAppStore>,
   ) {}
+
+  ngAfterViewInit() {
+    this.rootElement.nativeElement.scrollIntoView({ behavior: 'smooth' });
+  }
 
   ngOnInit() {
     this.paramSubscription = this.activatedRoute.paramMap.subscribe(params => {

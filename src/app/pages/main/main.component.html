@@ -1,1 +1,23 @@
-<h1>Main</h1>
+<section #mainSection class="main-section" *ngIf="($mainArticles | async) as mainArticles; else mainArticlesSkeleton">
+  @for (article of mainArticles.rows; track article.id) {
+      <app-article-card [article]="article"></app-article-card>
+  }
+</section>
+<app-articles-content></app-articles-content>
+<ng-template #mainArticlesSkeleton>
+  <div class="main-articles-skeleton">
+    <p-skeleton height="400px" />
+    <p-skeleton height="400px" />
+  </div>
+</ng-template>
+
+<ng-template #contentSkeleton>
+  <p-skeleton height="1000px" />
+</ng-template>
+
+<ng-template #contentArticlesSkeleton>
+  <div class="skeleton-wrapper">
+    <p-skeleton height="1000px" />
+    <p-skeleton height="1000px" />
+  </div>
+</ng-template>

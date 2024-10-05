@@ -11,6 +11,7 @@ export interface PaginatedReq {
   tags: string[];
   search: string;
   isPrivate?: boolean;
+  sort: 'desc' | 'asc';
 }
 
 export enum ActiveTypes {

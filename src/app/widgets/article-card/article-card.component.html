@@ -1,0 +1,25 @@
+<div class="article-card">
+  <p-skeleton height="350px" class="skeleton-card" />
+  <img injectImage imageId="{{article.thumbnail}}" class="article-card-image" />
+  <div class="article-card-content">
+    <h3 class="title">{{ article.title }}</h3>
+    <div class="user-info">
+      <div class="field-wrapper">
+        <app-avatar></app-avatar>
+        <div class="field-wrapper">
+          <p>Автор: {{ article.user.email }}</p>
+        </div>
+      </div>
+      <div class="field-wrapper">
+        <CalendarIcon />
+        <p>Дата публикации: {{ article.createdAt | date : "MM-dd-YYYY" }}</p>
+      </div>
+      <div class="field-wrapper">
+        @for (tag of article.articleTypes.slice(0, 3); track tag.articleTypeId) {
+          <mat-chip>{{ tag.articleType.name }}</mat-chip>
+        }
+      </div>
+    </div>
+  </div>
+  <a class="article-link" [routerLink]="'articles/' + article.id"></a>
+</div>

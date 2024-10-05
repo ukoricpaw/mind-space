@@ -5,6 +5,8 @@ import { RouterModule } from '@angular/router';
 import { ToHtmlDirective } from '../../directives/to-html.directive';
 import { ThumbnailContainerModule } from '../../widgets/thumbnail-container/thumbnail-container.module';
 import { ToArticleInfoPipe } from '../../pipes/to-article-info.pipe';
+import { SkeletonModule } from 'primeng/skeleton';
+import { AvatarModule } from '../../common/avatar/avatar.module';
 
 @NgModule({
   declarations: [SingleArticleComponent, ToHtmlDirective, ToArticleInfoPipe],
@@ -17,6 +19,8 @@ import { ToArticleInfoPipe } from '../../pipes/to-article-info.pipe';
       },
     ]),
     ThumbnailContainerModule,
+    SkeletonModule,
+    AvatarModule,
   ],
 })
 export default class SingleArticleModule {}

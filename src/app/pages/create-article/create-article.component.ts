@@ -1,4 +1,4 @@
-import { Component, DoCheck, OnDestroy, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ArticleService } from '../../services/article.service';
 import { Store } from '@ngrx/store';
 import { TAppStore } from '../../store/store.reducer';
@@ -8,7 +8,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ITag } from '../../store/reducers/article/article.constants';
 import { IError, Paginated } from '../../types/common.types';
 import { Subscription } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-article',
@@ -18,11 +18,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class CreateArticleComponent implements OnInit, OnDestroy {
   html: string = '';
   file: null | File = null;
-
-  $tagsIsLoading = this.store.select(tagsLoadingSelector);
   tagsSubscription!: Subscription;
   $tags = this.store.select(tagsSelector);
   tags!: Paginated<ITag>;
+  isLoading: boolean = false;
 
   htmlError: null | string = null;
   chosenTags: ITag[] = [];
@@ -73,8 +72,10 @@ export class CreateArticleComponent implements OnInit, OnDestroy {
     formData.append('tags', tags);
     formData.append('content', this.html);
 
+    this.isLoading = true;
     this.articleService.createArticle(formData).subscribe(
       data => {
+        this.isLoading = false;
         this.router.navigate(['/']);
       },
       (err: IError) => {},

@@ -11,3 +11,7 @@ export const fetchUser = createAction(USER_ACTIONS.LOADING, props<{ auth_type: '
 export const refreshUser = createAction(USER_ACTIONS.REFRESH);
 
 export const clearError = createAction(USER_ACTIONS.CLEAR_ERROR);
+
+export const logoutUser = createAction(USER_ACTIONS.LOGOUT);
+
+export const logoutSuccess = createAction(USER_ACTIONS.LOGOUT_SUCCESS);

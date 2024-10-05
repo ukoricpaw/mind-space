@@ -21,6 +21,6 @@
   </div>
   <app-text-editor [error]="htmlError" [html]="html" (htmlChange)="html = $event"></app-text-editor>
   <div class="btn-wrapper">
-    <button class="btn-form" type="submit" mat-raised-button>Создать</button>
+    <button [ngClass]="{disabled: isLoading}" [disabled]="isLoading" class="btn-form" type="submit" mat-raised-button>Создать</button>
   </div>
 </form>

@@ -1,9 +1,16 @@
 @import "../../styles/index.less";
 
+
 .thumbnail {
   height: 400px;
   position: relative;
   background-color: @active-color;
+
+  &-chips {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
 
   & .thumbnail-content {
     position: relative;
@@ -12,6 +19,7 @@
     flex-direction: column;
     height: 100%;
     justify-content: center;
+    padding: 0 1.5rem;
     & .thumbnail-title {
       font-size: 2.8rem;
       line-height: 3.5rem;

@@ -1,6 +1,11 @@
 <section class="thumbnail">
   <div class="thumbnail-content">
     <h1 class="thumbnail-title">{{ articleInfo.title }}</h1>
+    <div class="thumbnail-chips">
+      @for (tag of articleInfo.articleTypes; track tag.id) {
+        <mat-chip>{{ tag.articleType.name }}</mat-chip>
+      }
+    </div>
   </div>
   <img alt="thumbnail" class="thumbnail-image" injectImage [imageId]="articleInfo.thumbnail">
 </section>

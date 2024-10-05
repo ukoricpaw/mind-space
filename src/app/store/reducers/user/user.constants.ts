@@ -1,11 +1,14 @@
 import { USER_ROLES } from '../../../types/role.types';
 
+export interface IUser {
+  id: number;
+  email: string;
+  avatarUrl: string | null;
+  roleId: USER_ROLES;
+}
+
 export interface UserState {
-  data: {
-    id: number;
-    email: string;
-    roleId: USER_ROLES;
-  } | null;
+  data: IUser | null;
   isLoading: boolean;
   isAuth: boolean;
   error: string | null;
@@ -29,4 +32,6 @@ export enum USER_ACTIONS {
   LOADING = '[userAction] loading',
   REFRESH = '[userAction] refresh',
   CLEAR_ERROR = '[userAction] clear error',
+  LOGOUT = '[userAction] logout',
+  LOGOUT_SUCCESS = '[logoutSuccess] logoutSuccess',
 }

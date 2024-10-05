@@ -1,8 +1,21 @@
-<p *ngIf="$articleLoading | async">Loading...</p>
+<div #root class="skeleton-class" *ngIf="($articleLoading | async)">
+  <p-skeleton height="370px" borderRadius="8px" />
+  <p-skeleton height="800px" borderRadius="8px" />
+</div>
 <article *ngIf="($article | async) as fullArticle">
   <app-thumbnail-container [articleInfo]="fullArticle.article | toArticleInfo"></app-thumbnail-container>
-  <section class="article-content" [innerHTML]="safeHtml" toHtml [content]="fullArticle.article.content" (safeHtml)="setSafeHtml($event)" >
-
+  <div [ngClass]="{
+  'article-content': true,
+  'article-user': true
+  }">
+    <div class="article-field">
+      <app-avatar [imageUrl]="fullArticle.article.user.avatarUrl" [size]="60"></app-avatar>
+      <h2 >Автор - {{ fullArticle.article.user.email }}</h2>
+    </div>
+    <p class="publication-date">Опубликовано {{ fullArticle.article.createdAt | date : "MM-dd-YYYY" }}</p>
+  </div>
+  <section class="article-content" [innerHTML]="safeHtml" toHtml [content]="fullArticle.article.content"
+           (safeHtml)="setSafeHtml($event)">
   </section>
 </article>
 
