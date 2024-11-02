@@ -2,9 +2,14 @@ import { USER_ROLES } from '../../types/role.types';
 import { NavItem } from './header.constants';
 import { IUser } from '../../store/reducers/user/user.constants';
 
-export const getNavList: (profileId: number, userData: IUser | null) => NavItem[] = (profileId, userData) => {
+export const getNavList: (
+  profileId: number,
+  userData: IUser | null,
+  disabledItems?: Record<string, boolean>,
+) => NavItem[] = (profileId, userData, disabledItems) => {
   let navItems: NavItem[] = [
     {
+      name: 'main',
       title: 'Главная',
       path: '',
     },
@@ -13,25 +18,29 @@ export const getNavList: (profileId: number, userData: IUser | null) => NavItem[
   if (userData) {
     navItems = [
       {
+        name: 'create-article',
         title: 'Написать статью',
         path: 'create-article',
         isButton: true,
       },
       ...navItems,
       {
+        name: 'my-blog',
         title: 'Мой блог',
         path: `blog/${profileId}`,
       },
       {
+        name: 'profile',
         title: 'Профиль',
         path: `profile/${profileId}`,
-        icon: 'profile-icon',
+        imageUrl: userData.avatarUrl ?? null,
       },
     ];
   } else {
     navItems = [
       ...navItems,
       {
+        name: 'login',
         title: 'Войти',
         path: 'auth/login',
         isButton: true,
@@ -40,7 +49,15 @@ export const getNavList: (profileId: number, userData: IUser | null) => NavItem[
   }
 
   if (userData?.roleId === USER_ROLES.MODERATOR) {
-    navItems.unshift({ path: 'moderation', title: 'Модерация' });
+    navItems.unshift({ path: 'moderation', title: 'Модерация', name: 'moderation' });
+  }
+
+  if (disabledItems) {
+    navItems.forEach(item => {
+      if (disabledItems[item.name]) {
+        item.disabled = true;
+      }
+    });
   }
 
   return navItems;

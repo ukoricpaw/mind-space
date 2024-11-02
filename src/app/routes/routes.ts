@@ -20,6 +20,10 @@ export const routes: Routes = [
     loadChildren: () => import('../pages/single-article/single-article.module').then(mod => mod.default),
   },
   {
+    path: 'profile/:profileId',
+    loadChildren: () => import('../pages/profile/profile.module').then(mod => mod.default),
+  },
+  {
     path: '**',
     loadChildren: () => import('../pages/not-found/not-found.module').then(mod => mod.default),
   },

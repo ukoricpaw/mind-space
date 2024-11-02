@@ -1,0 +1,10 @@
+<div [ngClass]="">
+  <app-widget-profile *ngIf="user;else loader" [user]="user"></app-widget-profile>
+</div>
+
+<ng-template #loader>
+  <div class="loaderTemplate">
+    <p-skeleton height="300px"></p-skeleton>
+    <p-skeleton height="500px"></p-skeleton>
+  </div>
+</ng-template>

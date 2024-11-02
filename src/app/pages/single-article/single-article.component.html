@@ -10,12 +10,21 @@
   }">
     <div class="article-field">
       <app-avatar [imageUrl]="fullArticle.article.user.avatarUrl" [size]="60"></app-avatar>
-      <h2 >Автор - {{ fullArticle.article.user.email }}</h2>
+      <h2>Автор - {{ fullArticle.article.user.email }}</h2>
     </div>
-    <p class="publication-date">Опубликовано {{ fullArticle.article.createdAt | date : "MM-dd-YYYY" }}</p>
+    <p class="accent-field">Опубликовано {{ fullArticle.article.createdAt | date : "HH:MM MM-dd-YYYY" }}</p>
   </div>
   <section class="article-content" [innerHTML]="safeHtml" toHtml [content]="fullArticle.article.content"
            (safeHtml)="setSafeHtml($event)">
   </section>
+  <div class="article-content" style="padding-top: 0">
+    <div class="article-field">
+      <app-svg-icon name="eye"></app-svg-icon>
+      <p class="accent-field" style="font-weight: 500; margin: 0">
+        Количество просмотров:
+        {{ fullArticle.article.qtyOfViews }}
+      </p>
+    </div>
+  </div>
 </article>
 

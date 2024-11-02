@@ -22,7 +22,7 @@
     <div class="nothing-found" *ngIf="contentArticles.rows.length === 0">
       <p>Ничего не найдено ;(</p>
     </div>
-    <mat-paginator [disabled]="contentArticles.rows.length === 0" [pageSize]="limit" [pageIndex]="page - 1"
+    <mat-paginator  [disabled]="contentArticles.rows.length === 0" [pageSize]="limit" [pageIndex]="page - 1"
                    (page)="changePage($event)" [length]="contentArticles.count" [pageSizeOptions]="[3, 5, 10]" />
   </div>
   <div *ngIf="($tags | async) as tags">

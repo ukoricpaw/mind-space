@@ -1,7 +1,7 @@
 import { HttpBackend, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_URL, IAuth } from '../types/auth.types';
-import { delay, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { UserResponse } from '../store/reducers/user/user.constants';
 
 @Injectable({
@@ -9,12 +9,15 @@ import { UserResponse } from '../store/reducers/user/user.constants';
 })
 export default class AuthService {
   private httpClient!: HttpClient;
-  constructor(handler: HttpBackend) {
+  constructor(
+    handler: HttpBackend,
+    private logoutClient: HttpClient,
+  ) {
     this.httpClient = new HttpClient(handler);
   }
 
   logoutUser() {
-    return this.httpClient.get<{ message: string }>(`${API_URL}/user/logout`, { withCredentials: true });
+    return this.logoutClient.get<{ message: string }>(`${API_URL}/user/logout`, { withCredentials: true });
   }
 
   fetchUser(authDto: IAuth, auth_type: 'auth' | 'reg'): Observable<UserResponse> {
@@ -24,10 +27,8 @@ export default class AuthService {
   }
 
   refreshUser() {
-    return this.httpClient
-      .get<UserResponse>(`${API_URL}/user/refresh`, {
-        withCredentials: true,
-      })
-      .pipe(delay(1000));
+    return this.httpClient.get<UserResponse>(`${API_URL}/user/refresh`, {
+      withCredentials: true,
+    });
   }
 }

@@ -9,10 +9,20 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { ButtonDirective } from 'primeng/button';
 import { BanIcon } from 'primeng/icons/ban';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { AvatarModule } from '../../common/avatar/avatar.module';
 
 @NgModule({
   declarations: [Header, MindSpaceLogoComponent],
-  imports: [CommonModule, RouterAppModule, AppSvgModule, SkeletonModule, ButtonDirective, BanIcon, ConfirmPopupModule],
+  imports: [
+    CommonModule,
+    RouterAppModule,
+    AppSvgModule,
+    SkeletonModule,
+    ButtonDirective,
+    BanIcon,
+    ConfirmPopupModule,
+    AvatarModule,
+  ],
   exports: [Header],
 })
 export default class HeaderModule {}

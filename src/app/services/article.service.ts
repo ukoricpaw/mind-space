@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ArticleDto, PaginatedReq } from '../types/article.types';
+import { PaginatedReq } from '../types/article.types';
 import { API_URL } from '../types/auth.types';
-import { delay, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Paginated } from '../types/common.types';
-import { IArticle, ISingleArticleDto, ITag, TPaginatedArticles } from '../store/reducers/article/article.constants';
+import { ISingleArticleDto, ITag } from '../store/reducers/article/article.constants';
 
 @Injectable({ providedIn: 'root' })
 export class ArticleService {
@@ -47,26 +47,14 @@ export class ArticleService {
   }
 
   getSingleArticle(articleId: number) {
-    return this.http
-      .get<ISingleArticleDto>(`${API_URL}${this.ARTICLE_API_URL}/${articleId}`, {
-        withCredentials: true,
-      })
-      .pipe(delay(1500));
+    return this.http.get<ISingleArticleDto>(`${API_URL}${this.ARTICLE_API_URL}/${articleId}`, {
+      withCredentials: true,
+    });
   }
 
   getArticles(req: Partial<PaginatedReq>) {
-    return this.http
-      .get(`${API_URL}${this.ARTICLE_API_URL}?${this.createQueryParameters(req)}`, {
-        withCredentials: true,
-      })
-      .pipe(delay(1500));
-  }
-
-  getMyArticles(req: Partial<PaginatedReq>) {
-    return this.http
-      .get(`${API_URL}${this.ARTICLE_API_URL}/user?${this.createQueryParameters(req)}`, {
-        withCredentials: true,
-      })
-      .pipe(delay(1000));
+    return this.http.get(`${API_URL}${this.ARTICLE_API_URL}?${this.createQueryParameters(req)}`, {
+      withCredentials: true,
+    });
   }
 }

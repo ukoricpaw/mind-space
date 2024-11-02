@@ -9,6 +9,7 @@ import { ITag } from '../../store/reducers/article/article.constants';
 import { IError, Paginated } from '../../types/common.types';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { NavigationService } from '../../services/navigation.service';
 
 @Component({
   selector: 'app-create-article',
@@ -36,10 +37,12 @@ export class CreateArticleComponent implements OnInit, OnDestroy {
     private store: Store<TAppStore>,
     private articleService: ArticleService,
     private router: Router,
+    private navigationService: NavigationService,
   ) {
     this.tagsSubscription = this.$tags.subscribe(ownTags => {
       if (ownTags) this.tags = ownTags;
     });
+    this.navigationService.$navSubject.next([{ name: 'create-article', action: 'disable' }]);
   }
 
   ngOnInit() {
@@ -47,6 +50,7 @@ export class CreateArticleComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.navigationService.$navSubject.next([{ name: 'create-article', action: 'enable' }]);
     this.tagsSubscription?.unsubscribe();
   }
 

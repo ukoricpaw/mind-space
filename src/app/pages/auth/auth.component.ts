@@ -1,19 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IAuth } from '../../types/auth.types';
 import { Store } from '@ngrx/store';
 import { TAppStore } from '../../store/store.reducer';
 import { clearError, fetchUser } from '../../store/reducers/user/user.actions';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { isUserAuthSelector, userErrorSelector, userLoadingSelector } from '../../store/reducers/user/user.selectors';
+import { NavigationService } from '../../services/navigation.service';
 
 @Component({
   templateUrl: 'auth.component.html',
   styleUrl: 'auth.component.less',
   selector: 'auth-page',
 })
-export class AuthPageComponent implements OnInit {
+export class AuthPageComponent implements OnInit, OnDestroy {
   isLogin = true;
 
   $authError!: Observable<string | null>;
@@ -22,6 +23,7 @@ export class AuthPageComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private store: Store<TAppStore>,
+    private navigationService: NavigationService,
   ) {
     this.store.select(isUserAuthSelector).subscribe(val => {
       if (val) {
@@ -29,6 +31,7 @@ export class AuthPageComponent implements OnInit {
       }
     });
     this.$authError = this.store.select(userErrorSelector);
+    this.navigationService.$navSubject.next([{ name: 'login', action: 'disable' }]);
   }
 
   authForm = new FormGroup({
@@ -57,5 +60,9 @@ export class AuthPageComponent implements OnInit {
     } else {
       this.store.dispatch(fetchUser({ auth_type: 'reg', authDto: this.authForm.value as IAuth }));
     }
+  }
+
+  ngOnDestroy(): void {
+    this.navigationService.$navSubject.next([{ name: 'login', action: 'enable' }]);
   }
 }

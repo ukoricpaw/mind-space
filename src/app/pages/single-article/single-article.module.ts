@@ -7,6 +7,7 @@ import { ThumbnailContainerModule } from '../../widgets/thumbnail-container/thum
 import { ToArticleInfoPipe } from '../../pipes/to-article-info.pipe';
 import { SkeletonModule } from 'primeng/skeleton';
 import { AvatarModule } from '../../common/avatar/avatar.module';
+import AppSvgModule from '../../common/app-svg-icon/app-svg-icon.module';
 
 @NgModule({
   declarations: [SingleArticleComponent, ToHtmlDirective, ToArticleInfoPipe],
@@ -21,6 +22,7 @@ import { AvatarModule } from '../../common/avatar/avatar.module';
     ThumbnailContainerModule,
     SkeletonModule,
     AvatarModule,
+    AppSvgModule,
   ],
 })
 export default class SingleArticleModule {}

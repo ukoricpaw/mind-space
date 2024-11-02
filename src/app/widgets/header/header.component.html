@@ -3,24 +3,30 @@
     <app-logo></app-logo>
   </a>
   <nav class="nav">
-    <p-skeleton *ngIf="$userLoading | async" width="200px" />
+    <p-skeleton *ngIf="$userLoading | async" width="500px" height="30px" />
     <ul *ngIf="!($userLoading | async) && navList.length" class="nav-list">
       <li *ngFor="let item of navList; trackBy: navListTrackBy">
-        @if (item.isButton) {
-          <button class="header-button" [routerLink]="item.path" pButton>{{ item.title }}</button>
+        @if (item.disabled) {
+          {{null}}
         }
-        @else if (item.icon) {
+        @else if (item.isButton) {
+          <button class="header-button" [routerLink]="item.path" pButton>{{ item.title }}</button>
+        } @else if (item.icon) {
           <a [routerLink]="item.path"
           >
             <app-svg-icon [name]="item.icon"></app-svg-icon
             >
+          </a>
+        } @else if (item.imageUrl !== undefined) {
+          <a [routerLink]="item.path">
+            <app-avatar [imageUrl]="item.imageUrl"></app-avatar>
           </a>
         } @else {
           <a [routerLink]="item.path">{{ item.title }}</a>
         }
       </li>
       <li *ngIf="userData">
-       <app-svg-icon (click)="logout()" style="cursor: pointer" name="exit"></app-svg-icon>
+        <app-svg-icon (click)="logout()" style="cursor: pointer" name="exit"></app-svg-icon>
       </li>
 
     </ul>

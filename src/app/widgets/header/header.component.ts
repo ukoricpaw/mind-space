@@ -8,6 +8,8 @@ import { isUserAuthSelector, userDataSelector, userLoadingSelector } from '../..
 import { Subject, takeUntil } from 'rxjs';
 import { IUser } from '../../store/reducers/user/user.constants';
 import { logoutUser } from '../../store/reducers/user/user.actions';
+import { ActivatedRoute } from '@angular/router';
+import { NavigationService } from '../../services/navigation.service';
 
 @Component({
   selector: 'app-header',
@@ -20,19 +22,39 @@ export class Header implements OnDestroy {
 
   userData: IUser | null = null;
 
+  disabledList: Record<string, boolean> = {};
   navList: NavItem[] = getNavList(12, this.userData);
 
-  constructor(private store: Store<TAppStore>) {
+  constructor(
+    private store: Store<TAppStore>,
+    private navigationService: NavigationService,
+  ) {
     store
       .select(userDataSelector)
       .pipe(takeUntil(this.$userData))
       .subscribe(data => {
         this.userData = data;
-        this.navList = getNavList(12, this.userData);
+        this.updateNavList();
       });
+
+    this.navigationService.$navSubject.subscribe(data => {
+      data.forEach(el => {
+        if (el.action === 'disable') {
+          this.disabledList[el.name] = true;
+        } else {
+          delete this.disabledList[el.name];
+        }
+      });
+      this.updateNavList();
+    });
+  }
+
+  updateNavList() {
+    this.navList = getNavList(this.userData?.id as number, this.userData, this.disabledList);
   }
 
   ngOnDestroy() {
+    this.navigationService.$navSubject.complete();
     this.$userData.complete();
   }
 
