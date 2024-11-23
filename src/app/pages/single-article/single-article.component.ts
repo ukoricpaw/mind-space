@@ -1,4 +1,14 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ContentChildren,
+  ElementRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { TAppStore } from '../../store/store.reducer';
@@ -18,6 +28,8 @@ export class SingleArticleComponent implements OnDestroy, OnInit, AfterViewInit 
   $articleLoading = this.store.select(articleLoadingSelector);
   $article = this.store.select(articleSelector);
   safeHtml: SafeHtml = '';
+
+  @Input('toModerate') toModerate!: boolean;
 
   @ViewChild('root')
   rootElement!: ElementRef<HTMLDivElement>;

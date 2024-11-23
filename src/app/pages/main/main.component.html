@@ -3,7 +3,7 @@
       <app-article-card [article]="article"></app-article-card>
   }
 </section>
-<app-articles-content></app-articles-content>
+<app-articles-content [toModerate]="false"></app-articles-content>
 <ng-template #mainArticlesSkeleton>
   <div class="main-articles-skeleton">
     <p-skeleton height="400px" />

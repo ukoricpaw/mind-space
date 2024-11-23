@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ArticleService } from '../../services/article.service';
 import { Store } from '@ngrx/store';
 import { TAppStore } from '../../store/store.reducer';
-import { tagsLoadingSelector, tagsSelector } from '../../store/reducers/article/article.selectors';
+import { tagsSelector } from '../../store/reducers/article/article.selectors';
 import { tagsLoadingAction } from '../../store/reducers/article/article.actions';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ITag } from '../../store/reducers/article/article.constants';

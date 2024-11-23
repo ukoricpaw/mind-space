@@ -3,7 +3,7 @@ import { NavItem } from './header.constants';
 import { IUser } from '../../store/reducers/user/user.constants';
 
 export const getNavList: (
-  profileId: number,
+  profileId: number | null,
   userData: IUser | null,
   disabledItems?: Record<string, boolean>,
 ) => NavItem[] = (profileId, userData, disabledItems) => {

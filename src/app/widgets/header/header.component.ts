@@ -23,7 +23,7 @@ export class Header implements OnDestroy {
   userData: IUser | null = null;
 
   disabledList: Record<string, boolean> = {};
-  navList: NavItem[] = getNavList(12, this.userData);
+  navList: NavItem[] = getNavList(this.userData?.id || null, this.userData);
 
   constructor(
     private store: Store<TAppStore>,

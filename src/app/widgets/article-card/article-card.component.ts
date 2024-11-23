@@ -9,4 +9,6 @@ import { IArticle } from '../../store/reducers/article/article.constants';
 export class ArticleCardComponent {
   @Input('article')
   article!: Omit<IArticle, 'inviteLink' | 'content'>;
+
+  @Input('toModerate') toModerate!: boolean;
 }

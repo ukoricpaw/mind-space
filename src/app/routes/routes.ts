@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { IsUserAuthGuard } from '../guards/is-user-auth.guard';
+import { IsUserModeratorGuard } from '../guards/is-user-moderator.guard';
 
 export const routes: Routes = [
   {
@@ -22,6 +23,11 @@ export const routes: Routes = [
   {
     path: 'profile/:profileId',
     loadChildren: () => import('../pages/profile/profile.module').then(mod => mod.default),
+  },
+  {
+    path: 'moderation',
+    canActivate: [IsUserModeratorGuard],
+    loadChildren: () => import('../pages/moderation/moderation.module').then(mod => mod.default),
   },
   {
     path: '**',

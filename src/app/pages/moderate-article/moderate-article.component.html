@@ -1,0 +1,14 @@
+<app-single-article [toModerate]="true">
+
+
+</app-single-article>
+<div class="btn-wrapper">
+
+<button [disabled]="areButtonsDisabled" (click)="rejectArticle()" type="button" style="" mat-raised-button>
+  Отклонить
+</button>
+<button [disabled]="areButtonsDisabled" (click)="confirmArticle()" type="button" mat-raised-button>
+  Одобрить
+</button>
+</div>
+

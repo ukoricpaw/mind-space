@@ -24,6 +24,7 @@
     "@ngrx/store": "^17.2.0",
     "@ngrx/store-devtools": "^17.2.0",
     "ngx-editor": "^17.5.4",
+    "ngx-toastr": "^19.0.0",
     "primeng": "^17.18.11",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

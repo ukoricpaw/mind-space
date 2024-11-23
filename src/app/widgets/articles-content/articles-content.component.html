@@ -1,12 +1,12 @@
 <section #contentSection class="content-section" *ngIf="!isLoadingOtherContent; else contentArticlesSkeleton">
-  <h4 class="content-section-title">Новые статьи</h4>
+  <h4 class="content-section-title">{{title}}</h4>
   <div *ngIf="!isLoadingContentArticles; else contentSkeleton" class="content-articles">
     <p-inputGroup class="input-group">
       <button (click)="searchArticles()" class="search" type="button" pButton label="Найти"></button>
       <input [formControl]="search" class="search" type="text" pInputText placeholder="Искусственный интеллект..." />
       <div class="search-wrapper" *ngIf="searchedTitles?.count">
         @for (searched of searchedTitles.rows; track searched.title) {
-          <a [routerLink]="'articles/' + searched.id"><p class="search-title">{{ searched.title }}</p></a>
+          <a [routerLink]="toModerate ? '/articles/' + searched.id + '/moderate' : '/articles/' + searched.id"><p class="search-title">{{ searched.title }}</p></a>
         }
       </div>
     </p-inputGroup>
@@ -17,7 +17,7 @@
       <button (click)="resetTags()" severity="secondary" class="search" type="button" pButton label="Сбросить тэг"></button>
     </div>
     @for (article of contentArticles.rows; track article.id) {
-      <app-article-card [article]="article"></app-article-card>
+      <app-article-card [toModerate]="toModerate" [article]="article"></app-article-card>
     }
     <div class="nothing-found" *ngIf="contentArticles.rows.length === 0">
       <p>Ничего не найдено ;(</p>

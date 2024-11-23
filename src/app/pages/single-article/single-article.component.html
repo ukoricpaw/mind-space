@@ -18,7 +18,7 @@
            (safeHtml)="setSafeHtml($event)">
   </section>
   <div class="article-content" style="padding-top: 0">
-    <div class="article-field">
+    <div *ngIf="!toModerate" class="article-field">
       <app-svg-icon name="eye"></app-svg-icon>
       <p class="accent-field" style="font-weight: 500; margin: 0">
         Количество просмотров:

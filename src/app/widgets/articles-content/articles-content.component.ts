@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, OnDestroy, SimpleChanges, ViewChild } from '@angular/core';
 import { ITag, TPaginatedArticles } from '../../store/reducers/article/article.constants';
 import { PageEvent } from '@angular/material/paginator';
 import { debounceTime, Observable, Subscription } from 'rxjs';
@@ -11,7 +11,9 @@ import { FormControl } from '@angular/forms';
   templateUrl: './articles-content.component.html',
   styleUrl: './articles-content.component.less',
 })
-export class ArticlesContentComponent implements OnDestroy {
+export class ArticlesContentComponent implements OnDestroy, OnChanges {
+  @Input('toModerate') toModerate!: boolean;
+
   $searchObs!: Subscription;
   isLoadingOtherContent: boolean = true;
   isLoadingContentArticles: boolean = false;
@@ -20,6 +22,7 @@ export class ArticlesContentComponent implements OnDestroy {
   search = new FormControl<string>('');
   chosenTags: ITag[] = [];
   searchedTitles!: Paginated<{ title: string; id: number }>;
+  title = 'Новые статьи';
 
   $tags = this.articleService.getTags();
 
@@ -34,13 +37,16 @@ export class ArticlesContentComponent implements OnDestroy {
     this.searchArticles();
   }
 
-  constructor(private articleService: ArticleService) {
-    this.getContentArticles();
-    this.$searchObs = this.search.valueChanges.pipe(debounceTime(250)).subscribe(search => {
-      this.articleService.getSearchedTitles(search as string).subscribe(data => {
+  getObserverOfSearching(toModerate?: boolean) {
+    return this.search.valueChanges.pipe(debounceTime(250)).subscribe(search => {
+      this.articleService.getSearchedTitles(search as string, toModerate).subscribe(data => {
         this.searchedTitles = data;
       });
     });
+  }
+
+  constructor(private articleService: ArticleService) {
+    this.$searchObs = this.getObserverOfSearching();
   }
 
   searchByTag(tag: ITag) {
@@ -50,7 +56,7 @@ export class ArticlesContentComponent implements OnDestroy {
 
   searchArticles() {
     this.isLoadingContentArticles = true;
-    this.getContentArticles();
+    this.getContentArticles(this.toModerate);
   }
 
   resetTags() {
@@ -58,22 +64,23 @@ export class ArticlesContentComponent implements OnDestroy {
     this.searchArticles();
   }
 
-  getContentArticles() {
+  getContentArticles(toModerate?: boolean) {
     if (this.contentSection) {
       this.contentSection.nativeElement.scrollIntoView({ behavior: 'smooth' });
     }
-    (
-      this.articleService.getArticles({
-        search: this.search.value ?? '',
-        sort: 'desc',
-        limit: this.limit,
-        page: this.page,
-        tags: this.chosenTags.map(tag => String(tag.id)) || undefined,
-      }) as Observable<TPaginatedArticles>
-    ).subscribe(articles => {
+
+    const getArticles = toModerate ? this.articleService.getModerationArticles : this.articleService.getArticles;
+
+    getArticles({
+      search: this.search.value ?? '',
+      sort: 'desc',
+      limit: this.limit,
+      page: this.page,
+      tags: this.chosenTags.map(tag => String(tag.id)) || undefined,
+    }).subscribe(articles => {
       this.isLoadingOtherContent = false;
       this.isLoadingContentArticles = false;
-      this.contentArticles = articles;
+      this.contentArticles = articles as TPaginatedArticles;
     });
   }
 
@@ -84,5 +91,14 @@ export class ArticlesContentComponent implements OnDestroy {
 
   ngOnDestroy() {
     this.$searchObs.unsubscribe();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.getContentArticles(this.toModerate);
+    if (this.toModerate) {
+      this.title = 'Новые статьи для модерации';
+      this.$searchObs.unsubscribe();
+      this.$searchObs = this.getObserverOfSearching(true);
+    }
   }
 }
