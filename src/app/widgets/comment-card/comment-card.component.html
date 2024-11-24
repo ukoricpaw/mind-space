@@ -1,0 +1,41 @@
+<p-card class="card">
+  <div class="card-content">
+    <div class="card-user">
+        <div class="user-info">
+
+        <app-avatar [imageUrl]="comment.user.avatarUrl"></app-avatar>
+        <p>{{comment.user.email}}</p>
+      </div>
+        <p class="comment-created-date">{{comment.createdAt | date : "HH:MM MM-dd-YYYY"}}</p>
+    </div>
+  <p class="card-text">
+    {{comment.content}}
+  </p>
+    <div style="display: flex; align-items: center; justify-content:space-between">
+      <button *ngIf="checkIsDeletingAvailable() | async" class="reset-btn" (click)="openDeleteCommentModal()">
+      <app-svg-icon style="cursor: pointer; color: red;"  name="trash-bin-trash-svgrepo-com" />
+      </button>
+    <div *ngIf="$isUserAuthSelector | async" style="display: flex; min-height: 80px; gap: 32px; justify-content:flex-end">
+      <button (click)="like()" class="reset-btn">
+      <span [ngClass]="{
+        rate: true,
+        liked:  comment.commentRate[0] && comment.commentRate[0].rate === 1
+      }" style="cursor: pointer; display: flex; align-items:center; gap: 16px">
+      <app-svg-icon  name="like-svgrepo-com" />
+        Нравится
+      </span>
+      </button>
+      <button (click)="dislike()" class="reset-btn">
+
+      <span [ngClass]="{
+            rate: true,
+        disliked: comment.commentRate[0] && comment.commentRate[0].rate === 0
+      }" style="cursor: pointer; display: flex; align-items:center; gap: 16px">
+      <app-svg-icon name="dislike-svgrepo-com"/>
+        Не нравится
+      </span>
+      </button>
+    </div>
+  </div>
+    </div>
+</p-card>

@@ -7,5 +7,6 @@
       }
     </div>
   </div>
+  <a *ngIf="isEditAvailable" class="edit-link" [routerLink]="'/edit-article/' + articleInfo.id"><app-svg-icon name="edit-3-svgrepo-com"></app-svg-icon></a>
   <img alt="thumbnail" class="thumbnail-image" injectImage [imageId]="articleInfo.thumbnail">
 </section>

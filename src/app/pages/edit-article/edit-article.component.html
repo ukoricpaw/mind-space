@@ -1,0 +1,10 @@
+<ng-container *ngIf="article; else skeleton" >
+  <div class="edit-article">
+    <app-create-article [article]="article"></app-create-article>
+  </div>
+</ng-container>
+<ng-template #skeleton>
+  <div class="skeleton-wrapper">
+    <p-skeleton height="1000px" />
+  </div>
+</ng-template>

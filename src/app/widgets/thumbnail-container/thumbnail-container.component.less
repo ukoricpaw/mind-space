@@ -6,6 +6,18 @@
   position: relative;
   background-color: @active-color;
 
+  & .edit-link {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 8px;
+    z-index: 90;
+    color: #4e98ef;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+    background-color: white;
+  }
+
   &-chips {
     display: flex;
     justify-content: center;
@@ -28,6 +40,8 @@
       font-weight: 600;
       color: @elem-background;
     }
+
+
 
   }
 

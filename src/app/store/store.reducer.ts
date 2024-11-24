@@ -1,10 +1,11 @@
 import { ActionReducer } from '@ngrx/store';
-import { userReducer, articleReducer, profileReducer } from './reducers';
+import { userReducer, articleReducer, profileReducer, commentsReducer } from './reducers';
 
 export const reducer = {
   userReducer,
   articleReducer,
   profileReducer,
+  commentsReducer,
 };
 
 type TReducer<T extends ActionReducer<any>> = T extends ActionReducer<infer R> ? R : never;

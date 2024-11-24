@@ -29,5 +29,6 @@ import { ChooseFileModule } from '../../widgets/choose-file/choose-file.module';
     ChooseTagsModule,
     ChooseFileModule,
   ],
+  exports: [CreateArticleComponent],
 })
 export default class CreateArticleModule {}

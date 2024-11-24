@@ -1,10 +1,11 @@
 import { createReducer, on } from '@ngrx/store';
-import { ArticleActions, initialState } from './article.constants';
+import { initialState } from './article.constants';
 import {
   articleFailedAction,
   articleLoadingAction,
   articleSuccessAction,
   tagsFailedAction,
+  tagsLoadingAction,
   tagsSuccessAction,
 } from './article.actions';
 import { ActionStatus } from '../../../types/common.types';
@@ -27,7 +28,7 @@ export const articleReducer = createReducer(
     articleStatus: ActionStatus.SUCCESS,
     article,
   })),
-  on(tagsSuccessAction, state => ({
+  on(tagsLoadingAction, state => ({
     ...state,
     tagStatus: ActionStatus.IN_PROGRESS,
     tags: undefined,

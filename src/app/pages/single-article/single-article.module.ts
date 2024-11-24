@@ -10,11 +10,22 @@ import { AvatarModule } from '../../common/avatar/avatar.module';
 import AppSvgModule from '../../common/app-svg-icon/app-svg-icon.module';
 import ModerateArticleComponent from '../moderate-article/moderate-article.component';
 import { IsUserModeratorGuard } from '../../guards/is-user-moderator.guard';
-import { Button } from 'primeng/button';
+import { Button, ButtonDirective } from 'primeng/button';
 import { MatButton } from '@angular/material/button';
+import { IntersectionObserverDirective } from '../../directives/intersection-observer';
+import { CommentCardModule } from '../../widgets/comment-card/comment-card.module';
+import { CreateCommentModule } from '../../widgets/create-comment/create-comment.module';
+import { MatPaginator } from '@angular/material/paginator';
+import { ModalModule } from '../../widgets/modal/modal.module';
 
 @NgModule({
-  declarations: [SingleArticleComponent, ToHtmlDirective, ToArticleInfoPipe, ModerateArticleComponent],
+  declarations: [
+    SingleArticleComponent,
+    IntersectionObserverDirective,
+    ToHtmlDirective,
+    ToArticleInfoPipe,
+    ModerateArticleComponent,
+  ],
   imports: [
     CommonModule,
     RouterModule.forChild([
@@ -28,12 +39,17 @@ import { MatButton } from '@angular/material/button';
         canActivate: [IsUserModeratorGuard],
       },
     ]),
+    CommentCardModule,
+    CreateCommentModule,
     ThumbnailContainerModule,
     SkeletonModule,
     AvatarModule,
     AppSvgModule,
     Button,
     MatButton,
+    MatPaginator,
+    ModalModule,
+    ButtonDirective,
   ],
 })
 export default class SingleArticleModule {}

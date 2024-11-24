@@ -9,4 +9,6 @@ import { IArticle } from '../../store/reducers/article/article.constants';
 export class ThumbnailContainerComponent {
   @Input('articleInfo')
   articleInfo!: Omit<IArticle, 'content'>;
+
+  @Input('isEditAvailable') isEditAvailable = false;
 }

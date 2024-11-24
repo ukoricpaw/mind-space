@@ -3,7 +3,7 @@
   <p-skeleton height="800px" borderRadius="8px" />
 </div>
 <article *ngIf="($article | async) as fullArticle">
-  <app-thumbnail-container [articleInfo]="fullArticle.article | toArticleInfo"></app-thumbnail-container>
+  <app-thumbnail-container [isEditAvailable]="!toModerate && ($userDataSelector | async)?.id === fullArticle.article.userId" [articleInfo]="fullArticle.article | toArticleInfo"></app-thumbnail-container>
   <div [ngClass]="{
   'article-content': true,
   'article-user': true
@@ -20,11 +20,35 @@
   <div class="article-content" style="padding-top: 0">
     <div *ngIf="!toModerate" class="article-field">
       <app-svg-icon name="eye"></app-svg-icon>
-      <p class="accent-field" style="font-weight: 500; margin: 0">
+      <p class="accent-field" intersection-observer [isTriggerOnce]='true' (callback)="triggerView()" style="font-weight: 500; margin: 0">
         Количество просмотров:
         {{ fullArticle.article.qtyOfViews }}
       </p>
     </div>
   </div>
 </article>
+<ng-container *ngIf="!toModerate">
+<div intersection-observer [isTriggerOnce]="true" (callback)="fetchComments()"></div>
+ <app-create-comment (createComment)="createComment($event)" [isLoading]="($commentsLoading | async) ?? false" *ngIf="$isUserAuthSelector | async"></app-create-comment>
+<ul *ngIf="!($commentsLoading | async) && (($comments | async)?.length)">
+  <app-comment-card (openDeleteModal)="openDeleteCommentModal($event)" *ngFor="let comment of $comments | async; trackBy: commentsTrackBy" [comment]="comment"></app-comment-card>
+  <div  *ngIf="($comments | async)">
+  <mat-paginator *ngIf="($commentsCount | async) ?? 0 > commentsPageSize" [pageSize]="commentsPageSize" [pageIndex]="page - 1"
+                  (page)="changeCommentsPage($event)" [length]="$commentsCount | async" />
+  </div>
+</ul>
+  <app-modal [isOpen]="isDeleteCommentModalOpened" (closeModal)="closeDeleteCommentModal()">
+    <h4>Вы уверены что хотите удалить комментарий?</h4>
+    <div style="display: flex; gap: 16px; justify-content: space-between">
+      <button (click)="closeDeleteCommentModal()" style="flex: 1; padding: 8px; text-align:center;  " type="button" pButton >Вернуться</button>
+      <button  (click)="deleteComment()" style=" flex:1; padding: 8px; text-align:center;  " type="button" pButton >Удалить</button>
+    </div>
+  </app-modal>
+<div class="skeleton-class" *ngIf="($commentsLoading | async)">
+  <p-skeleton height="370px" borderRadius="8px" />
+  <p-skeleton height="200px" borderRadius="8px" />
+  <p-skeleton height="200px" borderRadius="8px" />
+  <p-skeleton height="200px" borderRadius="8px" />
+</div>
 
+</ng-container>

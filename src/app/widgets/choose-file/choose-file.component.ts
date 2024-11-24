@@ -10,6 +10,9 @@ export class ChooseFileComponent implements OnChanges {
   file: File | null = null;
   imageTemplate: string | null = null;
 
+  @Input('defaultUrl')
+  defaultUrl: string | null = null;
+
   @Output('fileChange')
   fileChange = new EventEmitter<File>();
 

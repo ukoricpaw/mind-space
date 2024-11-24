@@ -1,0 +1,7 @@
+<p-card>
+  <form class="form">
+    <h4>Написать комментарий:</h4>
+    <textarea class="textarea" [formControl]="formControl"></textarea>
+    <button [disabled]="buttonIsDisabled || isLoading" (click)="onSubmitHandler()" style="padding: 8px 16px" type="button" pButton>Отправить</button>
+  </form>
+</p-card>

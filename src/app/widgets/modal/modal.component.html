@@ -1,0 +1,7 @@
+<section *ngIf="isOpen" (click)="close()" class="modal-wrapper">
+  <div (click)="onModalClick($event)" class="modal">
+    <ng-content></ng-content>
+  </div>
+</section>
+
+

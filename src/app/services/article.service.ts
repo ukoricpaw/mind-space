@@ -4,12 +4,19 @@ import { PaginatedReq } from '../types/article.types';
 import { API_URL } from '../types/auth.types';
 import { delay, Observable, timeout } from 'rxjs';
 import { Paginated } from '../types/common.types';
-import { ISingleArticleDto, ITag } from '../store/reducers/article/article.constants';
+import {
+  CommentRateRequest,
+  IComment,
+  ICommentRate,
+  ISingleArticleDto,
+  ITag,
+} from '../store/reducers/article/article.constants';
 
 @Injectable({ providedIn: 'root' })
 export class ArticleService {
   ARTICLE_API_URL = '/article';
   USER_API_URL = '/user';
+  COMMENT_API_URL = '/comment';
 
   constructor(private http: HttpClient) {}
 
@@ -21,6 +28,46 @@ export class ArticleService {
     searchParams.set('title', search);
     return this.http.get<Paginated<{ title: string; id: number }>>(
       `${API_URL}${this.ARTICLE_API_URL}/search?${searchParams}`,
+      {
+        withCredentials: true,
+      },
+    );
+  }
+
+  createComment(articleId: number, content: string) {
+    return this.http.post(
+      `${API_URL}${this.COMMENT_API_URL}/${articleId}`,
+      { content },
+      {
+        withCredentials: true,
+      },
+    );
+  }
+
+  getArticleComments(articleId: number, req: Partial<Pick<PaginatedReq, 'page'>>): Observable<Paginated<IComment>> {
+    return this.http
+      .get<Paginated<IComment>>(`${API_URL}${this.COMMENT_API_URL}/${articleId}?${this.createQueryParameters(req)}`, {
+        withCredentials: true,
+      })
+      .pipe(delay(500));
+  }
+
+  deleteComment(articleId: number, commentId: number) {
+    return this.http.delete(`${API_URL}${this.COMMENT_API_URL}/${articleId}/${commentId}`, {
+      withCredentials: true,
+    });
+  }
+
+  rateComment(commentId: number, body: CommentRateRequest): Observable<ICommentRate> {
+    return this.http.patch<ICommentRate>(`${API_URL}${this.COMMENT_API_URL}/${commentId}/rate`, body, {
+      withCredentials: true,
+    });
+  }
+
+  updateComment(articleId: number, commentId: number, content: string): Observable<IComment> {
+    return this.http.put<IComment>(
+      `${API_URL}${this.COMMENT_API_URL}/${articleId}/${commentId}`,
+      { content },
       {
         withCredentials: true,
       },
@@ -58,10 +105,13 @@ export class ArticleService {
     return this.http.get<Paginated<ITag>>(`${API_URL}${this.ARTICLE_API_URL}/tags`, { withCredentials: true });
   }
 
-  getSingleArticle(articleId: number) {
-    return this.http.get<ISingleArticleDto>(`${API_URL}${this.ARTICLE_API_URL}/${articleId}`, {
-      withCredentials: true,
-    });
+  getSingleArticle(articleId: number, toEdit?: boolean) {
+    return this.http.get<ISingleArticleDto>(
+      `${API_URL}${this.ARTICLE_API_URL}/${articleId}${toEdit ? '?to-edit=true' : ''}`,
+      {
+        withCredentials: true,
+      },
+    );
   }
 
   moderateArticle(articleId: number, moderateType: 'CONFIRMED' | 'DENIED') {
@@ -81,4 +131,16 @@ export class ArticleService {
       withCredentials: true,
     });
   };
+
+  modifyArticle(articleId: number, formData: FormData) {
+    return this.http.patch(`${API_URL}${this.ARTICLE_API_URL}/${articleId}`, formData, {
+      withCredentials: true,
+    });
+  }
+
+  addViewToArticle(articleId: number) {
+    return this.http.get(`${API_URL}${this.ARTICLE_API_URL}/${articleId}/views`, {
+      withCredentials: true,
+    });
+  }
 }

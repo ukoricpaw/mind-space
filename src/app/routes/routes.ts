@@ -30,6 +30,11 @@ export const routes: Routes = [
     loadChildren: () => import('../pages/moderation/moderation.module').then(mod => mod.default),
   },
   {
+    path: 'edit-article',
+    canActivate: [IsUserAuthGuard],
+    loadChildren: () => import('../pages/edit-article/edit-article.module').then(mod => mod.default),
+  },
+  {
     path: '**',
     loadChildren: () => import('../pages/not-found/not-found.module').then(mod => mod.default),
   },

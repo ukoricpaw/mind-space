@@ -1,5 +1,5 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <legend>Написать статью</legend>
+  <legend>{{title}}</legend>
   <div class="field-wrapper">
     <label for="title" class="field-wrapper-title">Введите название</label>
     <mat-form-field class="form-file">
@@ -17,10 +17,11 @@
   </ng-container>
   <div class="field-wrapper">
     <label class="field-wrapper-title">Выберите превью для статьи</label>
-    <app-choose-file [(file)]="file"></app-choose-file>
+    <app-choose-file [defaultUrl]="article ? imageUrl : null" [(file)]="file"></app-choose-file>
   </div>
   <app-text-editor [error]="htmlError" [html]="html" (htmlChange)="html = $event"></app-text-editor>
-  <div class="btn-wrapper">
-    <button [ngClass]="{disabled: isLoading}" [disabled]="isLoading" class="btn-form" type="submit" mat-raised-button>Создать</button>
+    <div class="btn-wrapper">
+      <button (click)="redirectToFirstPage()" *ngIf="article" type="button" style="background-color: #f67878" [ngClass]="{disabled: isLoading}" [disabled]="isLoading" class="btn-form" mat-raised-button>Отмена</button>
+      <button [ngClass]="{disabled: isLoading}" [disabled]="isLoading" class="btn-form" type="submit" mat-raised-button>{{article ? "Изменить" : "Создать"}}</button>
   </div>
 </form>

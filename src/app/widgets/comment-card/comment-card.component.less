@@ -1,0 +1,51 @@
+.card {
+  padding: 24px;
+
+  & .card-content {
+    padding: 24px;
+
+   & .card-user {
+     display: flex;
+     justify-content: space-between;
+
+     & .user-info {
+       display: flex;
+       gap: 24px;
+       align-items: center;
+     & p {
+       font-weight: 500;
+     }
+     }
+  & .comment-created-date {
+    font-weight: 500
+  }
+
+   }
+
+    & .card-text {
+      margin-top: 16px;
+      font-size: 16px;
+      word-wrap: break-word;
+    }
+  }
+}
+
+.rate {
+  transition: transform 0.15s ease-in;
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
+.liked {
+  color: blue;
+}
+
+.disliked {
+  color: red;
+}
+
+.reset-btn {
+  background: none;
+  border: none;
+}
