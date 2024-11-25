@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { PaginatedReq } from '../types/article.types';
 import { API_URL } from '../types/auth.types';
-import { delay, Observable, timeout } from 'rxjs';
+import { delay, Observable } from 'rxjs';
 import { Paginated } from '../types/common.types';
 import {
   CommentRateRequest,
@@ -92,6 +92,9 @@ export class ArticleService {
       const tagsQuery = req.tags.join(';');
       query += `&tags=${tagsQuery}`;
     }
+    if (req.status !== undefined) {
+      query += `&status=${req.status}`;
+    }
     return query;
   }
 
@@ -131,6 +134,24 @@ export class ArticleService {
       withCredentials: true,
     });
   };
+
+  getUserArticles = (userId: number, req: Partial<PaginatedReq>) => {
+    return this.http
+      .get(`${API_URL}/user/${userId}/articles?${this.createQueryParameters(req)}`, {
+        withCredentials: true,
+      })
+      .pipe(delay(1000));
+  };
+
+  rateArticle(articleId: number, rateRequest: CommentRateRequest) {
+    return this.http.post(`${API_URL}${this.ARTICLE_API_URL}/${articleId}/rate`, rateRequest, {
+      withCredentials: true,
+    });
+  }
+
+  getArticleRates(articleId: number) {
+    return this.http.get(`${API_URL}${this.ARTICLE_API_URL}/${articleId}/rate`, { withCredentials: true });
+  }
 
   modifyArticle(articleId: number, formData: FormData) {
     return this.http.patch(`${API_URL}${this.ARTICLE_API_URL}/${articleId}`, formData, {

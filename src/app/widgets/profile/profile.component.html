@@ -1,3 +1,9 @@
-<section id="{{user.id}}">
-  {{user.id}}
+<section class="profile-section" id="{{user.id}}">
+  <app-avatar [size]="80" [imageUrl]="user.avatarUrl"></app-avatar>
+  <ul class="profile-info">
+    <div style="display: flex;gap: 16px;" *ngFor="let field of fields; trackBy: trackByField">
+      <strong>{{field.label}}</strong>
+      <p>{{field.value}}</p>
+    </div>
+  </ul>
 </section>

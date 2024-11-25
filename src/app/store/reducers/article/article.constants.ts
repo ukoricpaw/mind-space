@@ -2,7 +2,6 @@ import { IRole } from '../../../types/role.types';
 import { ActionStatus, IError, Paginated } from '../../../types/common.types';
 import { ActiveTypes } from '../../../types/article.types';
 import { IUser } from '../user/user.constants';
-import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 
 export interface ArticleState {
   tagStatus: ActionStatus | null;

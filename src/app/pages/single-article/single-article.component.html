@@ -9,7 +9,9 @@
   'article-user': true
   }">
     <div class="article-field">
-      <app-avatar [imageUrl]="fullArticle.article.user.avatarUrl" [size]="60"></app-avatar>
+      <a [routerLink]="'/profile/' + fullArticle.article.userId">
+        <app-avatar [imageUrl]="fullArticle.article.user.avatarUrl" [size]="60"></app-avatar>
+      </a>
       <h2>Автор - {{ fullArticle.article.user.email }}</h2>
     </div>
     <p class="accent-field">Опубликовано {{ fullArticle.article.createdAt | date : "HH:MM MM-dd-YYYY" }}</p>
@@ -17,13 +19,23 @@
   <section class="article-content" [innerHTML]="safeHtml" toHtml [content]="fullArticle.article.content"
            (safeHtml)="setSafeHtml($event)">
   </section>
-  <div class="article-content" style="padding-top: 0">
-    <div *ngIf="!toModerate" class="article-field">
+  <div *ngIf="!toModerate" class="article-content article-flex-content" style="padding-top: 0;">
+    <div class="article-field">
       <app-svg-icon name="eye"></app-svg-icon>
       <p class="accent-field" intersection-observer [isTriggerOnce]='true' (callback)="triggerView()" style="font-weight: 500; margin: 0">
         Количество просмотров:
         {{ fullArticle.article.qtyOfViews }}
       </p>
+    </div>
+    <div *ngIf="!!articleRates" style="display: flex; gap: 24px;">
+        <button [disabled]="ratingDisable || !($isUserAuthSelector | async)" (click)="rateArticle(1, isTouched(1))" [ngClass]="{like: isTouched(1), button: $isUserAuthSelector | async}"  class="article-field" style="background-color: white; border: none">
+            <app-svg-icon name="like-svgrepo-com"></app-svg-icon>
+            <p class="accent-field">{{articleRates.likes || 0}}</p>
+        </button>
+        <button [disabled]="ratingDisable || !($isUserAuthSelector | async)" (click)="rateArticle(0, isTouched(0))" [ngClass]="{dislike: isTouched(0), button: $isUserAuthSelector | async}" class="article-field" style=" background-color: white; border: none">
+            <app-svg-icon name="dislike-svgrepo-com"></app-svg-icon>
+            <p class="accent-field">{{articleRates.dislikes || 0}}</p>
+        </button>
     </div>
   </div>
 </article>

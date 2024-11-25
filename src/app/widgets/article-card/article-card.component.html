@@ -10,16 +10,19 @@
           <p>Автор: {{ article.user.email }}</p>
         </div>
       </div>
-      <div class="field-wrapper">
+      <div *ngIf="article.articleActiveType === 1" class="field-wrapper">
         <CalendarIcon />
-        <p>Дата публикации: {{ article.createdAt | date : "HH:MM MM-dd-YYYY" }}</p>
+        <p >Дата публикации: {{ article.createdAt | date : "HH:MM MM-dd-YYYY" }}</p>
       </div>
-      <div class="field-wrapper">
+      <div  *ngIf="article.articleActiveType === 1" class="field-wrapper">
         @for (tag of article.articleTypes.slice(0, 3); track tag.articleTypeId) {
           <mat-chip>{{ tag.articleType.name }}</mat-chip>
         }
       </div>
     </div>
   </div>
-  <a class="article-link" [routerLink]="toModerate ? '/articles/' + article.id + '/moderate' : '/articles/' + article.id"></a>
+  <a class="article-link" *ngIf="toModerate || article.articleActiveType === 1" [routerLink]="toModerate ? '/articles/' + article.id + '/moderate' : '/articles/' + article.id"></a>
+  <div *ngIf="!toModerate && article.articleActiveType !== 1" class="is-not-affordable">
+    <h5 style="font-size: 32px">{{this.disabledMessage}}</h5>
+  </div>
 </div>

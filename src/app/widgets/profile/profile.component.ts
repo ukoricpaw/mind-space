@@ -1,5 +1,6 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { IUser } from '../../store/reducers/user/user.constants';
+import { USER_ROLES } from '../../types/role.types';
 
 @Component({
   selector: 'app-widget-profile',
@@ -9,7 +10,19 @@ import { IUser } from '../../store/reducers/user/user.constants';
 export class ProfileComponent implements OnChanges {
   @Input('user') user!: IUser;
 
-  ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
+  @Input('isAuthenticatedUser') isAuthenticatedUser = false;
+
+  fields: { label: string; value: string | number }[] = [];
+
+  ngOnChanges() {
+    const newFields = [];
+    newFields.push({ label: 'ID:', value: this.user.id });
+    newFields.push({ label: 'Email:', value: this.user.email });
+    newFields.push({ label: 'Роль:', value: USER_ROLES[this.user.roleId] });
+    this.fields = newFields;
+  }
+
+  trackByField(index: number, field: { label: string; value: string | number }) {
+    return field.value;
   }
 }

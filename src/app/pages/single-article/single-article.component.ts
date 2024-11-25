@@ -15,7 +15,7 @@ import {
   commentsLoadingSelector,
   commentsSelector,
 } from '../../store/reducers/comments/comments.selectors';
-import { IComment } from '../../store/reducers/article/article.constants';
+import { IArticle, IComment } from '../../store/reducers/article/article.constants';
 import { PageEvent } from '@angular/material/paginator';
 import { ArticleService } from '../../services/article.service';
 import { isUserAuthSelector, userDataSelector } from '../../store/reducers/user/user.selectors';
@@ -37,6 +37,8 @@ export class SingleArticleComponent implements OnDestroy, OnInit, AfterViewInit 
   commentWhichWillBeDeleted: null | number = null;
   $isUserAuthSelector = this.store.select(isUserAuthSelector);
   $userDataSelector = this.store.select(userDataSelector);
+  articleRates: { dislikes: number; likes: number; articleRate: { rate: 0 | 1 }[] } | null = null;
+  ratingDisable: boolean = false;
 
   commentsPageSize = 10;
   page = 1;
@@ -65,6 +67,7 @@ export class SingleArticleComponent implements OnDestroy, OnInit, AfterViewInit 
     this.paramSubscription = this.activatedRoute.paramMap.subscribe(params => {
       this.articleId = params.get('articleId') as string;
       this.store.dispatch(articleLoadingAction({ articleId: Number(this.articleId) }));
+      this.getRates();
     });
   }
 
@@ -75,6 +78,13 @@ export class SingleArticleComponent implements OnDestroy, OnInit, AfterViewInit 
   commentsTrackBy: (index: number, el: IComment) => number = (index, el) => {
     return el.id;
   };
+
+  getRates() {
+    this.articleService.getArticleRates(Number(this.articleId)).subscribe(data => {
+      this.articleRates = data as any;
+      this.ratingDisable = false;
+    });
+  }
 
   fetchComments() {
     this.store.dispatch(commentsLoadingAction({ articleId: Number(this.articleId), page: this.page }));
@@ -87,6 +97,20 @@ export class SingleArticleComponent implements OnDestroy, OnInit, AfterViewInit 
 
   triggerView() {
     this.articleService.addViewToArticle(Number(this.articleId)).subscribe();
+  }
+
+  rateArticle(rate: 0 | 1, isTouched: boolean) {
+    this.articleService
+      .rateArticle(Number(this.articleId), { rate, action: isTouched ? 'DELETE' : 'ADD' })
+      .subscribe(() => {
+        this.ratingDisable = true;
+        this.getRates();
+      });
+  }
+
+  isTouched(rate: number) {
+    if (!this.articleRates) return false;
+    return this.articleRates.articleRate[0] && this.articleRates.articleRate[0].rate === rate;
   }
 
   ngOnDestroy() {

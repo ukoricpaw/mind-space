@@ -1,6 +1,5 @@
-<div [ngClass]="">
-  <app-widget-profile *ngIf="user;else loader" [user]="user"></app-widget-profile>
-</div>
+<app-widget-profile [isAuthenticatedUser]="Boolean(ownUser && user && (ownUser.id === user.id))" *ngIf="user;else loader" [user]="user"></app-widget-profile>
+<app-profile-articles *ngIf="user" [user]="user" [isAuthenticatedUser]="Boolean(ownUser && user && (ownUser.id === user.id))"></app-profile-articles>
 
 <ng-template #loader>
   <div class="loaderTemplate">

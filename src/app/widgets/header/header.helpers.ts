@@ -25,11 +25,6 @@ export const getNavList: (
       },
       ...navItems,
       {
-        name: 'my-blog',
-        title: 'Мой блог',
-        path: `blog/${profileId}`,
-      },
-      {
         name: 'profile',
         title: 'Профиль',
         path: `profile/${profileId}`,

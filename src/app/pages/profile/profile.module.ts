@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { NgClass, NgIf } from '@angular/common';
 import { ProfileModule as ProfileWidgetModule } from '../../widgets/profile/profile.module';
 import { SkeletonModule } from 'primeng/skeleton';
+import { ProfileArticlesModule } from '../../widgets/profile-articles/profile-articles.module';
 
 @NgModule({
   declarations: [ProfileComponent],
@@ -13,6 +14,7 @@ import { SkeletonModule } from 'primeng/skeleton';
     ProfileWidgetModule,
     SkeletonModule,
     NgIf,
+    ProfileArticlesModule,
   ],
 })
 export default class ProfileModule {}

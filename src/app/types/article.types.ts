@@ -12,6 +12,7 @@ export interface PaginatedReq {
   search: string;
   isPrivate?: boolean;
   sort: 'desc' | 'asc';
+  status: number;
 }
 
 export enum ActiveTypes {

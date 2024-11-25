@@ -26,6 +26,10 @@ export default class AuthService {
     return this.httpClient.post<UserResponse>(`${API_URL}/user/registration`, authDto, { withCredentials: true });
   }
 
+  getUser(userId: number) {
+    return this.httpClient.get(`${API_URL}/user/${userId}`, { withCredentials: true });
+  }
+
   refreshUser() {
     return this.httpClient.get<UserResponse>(`${API_URL}/user/refresh`, {
       withCredentials: true,

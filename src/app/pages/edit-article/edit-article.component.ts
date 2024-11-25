@@ -20,7 +20,6 @@ export class EditArticleComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log('AA');
     this.activatedRoute.paramMap.subscribe(params => {
       this.articleService
         .getSingleArticle(Number(params.get('articleId')), true)
